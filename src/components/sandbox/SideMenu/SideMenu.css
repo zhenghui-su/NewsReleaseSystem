@@ -1,0 +1,19 @@
+.logo {
+    color: #fff;
+    line-height: 32px;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 18px;
+    margin: 10px;
+    text-align: center;
+}
+
+.Menu {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.MenuList {
+    flex: 100vh;
+    overflow: auto;
+}
