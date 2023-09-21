@@ -13,6 +13,7 @@
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
+    "react-tsparticles": "^2.12.2",
     "sass": "^1.66.1",
     "web-vitals": "^2.1.4"
   },
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.2.6",
-    "react-router-dom": "^5.3.4"
+    "react-router-dom": "^5.3.4",
+    "tsparticles-slim": "^2.12.0"
   }
 }
