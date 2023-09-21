@@ -10,8 +10,9 @@ import {
 import Dropdown from "antd/es/dropdown/dropdown";
 import {Space} from "antd";
 import Avatar from "antd/es/avatar/avatar";
+import {withRouter} from "react-router";
 
-function TopHeader() {
+function TopHeader(props) {
     const [collapsed, setCollapsed] = useState(false);
     const changeCollapsed = () => {
         setCollapsed(!collapsed);
@@ -27,10 +28,14 @@ function TopHeader() {
         {
             key: '2',
             label: (
-                <span>退出登录</span>
+                <span onClick={() => {
+                    localStorage.removeItem("token");
+                    props.history.replace("/login");
+                }}>退出登录</span>
             ),
             icon: <PoweroffOutlined/>,
             danger: true,
+
         },
 
 
@@ -58,11 +63,10 @@ function TopHeader() {
                         />
                         <DownOutlined/>
                     </Space>
-
                 </Dropdown>
             </div>
         </Header>
     );
 }
 
-export default TopHeader;
+export default withRouter(TopHeader);

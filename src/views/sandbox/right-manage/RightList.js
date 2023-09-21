@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Table, Tag, Modal} from "antd";
+import {Button, Table, Tag, Modal, Popover, Switch} from "antd";
 import axios from "axios";
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 
@@ -36,11 +36,25 @@ function RightList() {
                         icon={<DeleteOutlined/>}
                         onClick={() => confirmMethod(item)}
                     />
-                    <Button
-                        type="primary"
-                        shape="circle"
-                        icon={<EditOutlined/>}
-                    />
+                    <Popover
+                        content={<div style={{textAlign: "center"}}>
+                            <Switch
+                                checked={item.pagepermisson}
+                                onChange={() => switchMethod(item)}
+                            />
+                        </div>}
+                        title="页面配置项"
+                        trigger={
+                            item.pagepermisson === undefined ? "" : "click"
+                        }
+                    >
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            icon={<EditOutlined/>}
+                            disabled={item.pagepermisson === undefined}
+                        />
+                    </Popover>
                 </>
             }
         },
@@ -72,6 +86,22 @@ function RightList() {
             },
         });
     };
+    // 设置配置项是否显示
+    const switchMethod = (item) => {
+        item.pagepermisson = item.pagepermisson === 1 ? 0 : 1
+        // console.log(item)
+        setDataSource([...dataSource])
+
+        if (item.grade === 1) {
+            axios.patch(`http://localhost:5000/rights/${item.id}`, {
+                pagepermisson: item.pagepermisson
+            }).then()
+        } else {
+            axios.patch(`http://localhost:5000/children/${item.id}`, {
+                pagepermisson: item.pagepermisson
+            }).then()
+        }
+    }
     // 删除方法
     const deleteMethod = (item) => {
         // 当前页面同步状态 + 后端同步
