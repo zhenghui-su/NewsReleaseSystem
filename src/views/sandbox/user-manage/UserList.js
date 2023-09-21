@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Table, Modal, Switch} from "antd";
 import axios from "axios";
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
@@ -19,11 +19,40 @@ function UserList() {
 
     const addForm = useRef(null);
     const updateForm = useRef(null);
+
+    const {roleId, region, username} = JSON.parse(localStorage.getItem("token"));
+
+    useEffect(() => {
+        const roleObj = {
+            "1": "superAdmin",
+            "2": "admin",
+            "3": "editor"
+        };
+        axios.get("http://localhost:5000/users?_expand=role").then(res => {
+            const list = res.data;
+            setUserSource(roleObj[roleId] === "superAdmin" ? list : [
+                ...list.filter(item => item.username === username),
+                ...list.filter(item => item.region === region
+                    && roleObj[item.roleId] === "editor")
+            ]);
+        });
+    }, [region, roleId, username]);
+    useEffect(() => {
+        axios.get("http://localhost:5000/regions").then(res => {
+
+            setRegionList(res.data);
+        });
+    }, []);
+    useEffect(() => {
+        axios.get("http://localhost:5000/roles").then(res => {
+            setRoleList(res.data);
+        });
+    }, []);
     // 表格
     const columns = [
         {
-            title: '区域',
-            dataIndex: 'region',
+            title: "区域",
+            dataIndex: "region",
             filters: [
                 ...regionList.map(item => ({
                     text: item.title,
@@ -36,38 +65,38 @@ function UserList() {
             ],
             onFilter: (value, item) => {
                 if (value === "全球") {
-                    return item.region === ""
+                    return item.region === "";
                 }
-                return item.region === value
+                return item.region === value;
             },
             render: (region) => {
-                return <b>{region ? region : "全球"}</b>
+                return <b>{region ? region : "全球"}</b>;
             }
         },
         {
-            title: '角色名称',
-            dataIndex: 'role',
+            title: "角色名称",
+            dataIndex: "role",
             render: (role) => {
                 return role.roleName;
             }
         },
         {
-            title: '用户名',
-            dataIndex: 'username',
+            title: "用户名",
+            dataIndex: "username",
         },
         {
-            title: '用户状态',
-            dataIndex: 'roleState',
+            title: "用户状态",
+            dataIndex: "roleState",
             render: (roleState, item) => {
                 return <Switch
                     checked={roleState}
                     disabled={item.default}
                     onChange={() => handleChange(item)}
-                />
+                />;
             }
         },
         {
-            title: '操作',
+            title: "操作",
             render: (item) => {
                 return <>
                     <Button
@@ -84,30 +113,14 @@ function UserList() {
                         disabled={item.default}
                         onClick={() => handleUpdate(item)}
                     />
-                </>
+                </>;
             }
         },
     ];
-
-    useEffect(() => {
-        axios.get("http://localhost:5000/users?_expand=role").then(res => {
-            setUserSource(res.data);
-        });
-    }, []);
-    useEffect(() => {
-        axios.get("http://localhost:5000/regions").then(res => {
-            setRegionList(res.data);
-        });
-    }, []);
-    useEffect(() => {
-        axios.get("http://localhost:5000/roles").then(res => {
-            setRoleList(res.data);
-        });
-    }, []);
     // 点击删除图片弹出对话框
     const confirmMethod = (item) => {
         confirm({
-            title: '你确定要删除?',
+            title: "你确定要删除?",
             icon: <ExclamationCircleOutlined/>,
             onOk() {
                 deleteMethod(item);
@@ -121,7 +134,7 @@ function UserList() {
         // 当前页面同步状态 + 后端同步
         setUserSource(userSource.filter(data => data.id !== item.id));
         axios.delete(`http://localhost:5000/users/${item.id}`).then();
-    }
+    };
     // 添加提交表单方法
     const addFormOk = () => {
         addForm.current.validateFields().then((value) => {
@@ -137,11 +150,11 @@ function UserList() {
                     ...res.data,
                     role: roleList.filter(item => item.id === value.roleId)[0],
                 }]);
-            })
+            });
         }).catch((err) => {
             console.log(err);
-        })
-    }
+        });
+    };
     // 更新提交表单方法
     const updateFormOk = () => {
         updateForm.current.validateFields().then((value) => {
@@ -153,23 +166,23 @@ function UserList() {
                         ...item,
                         ...value,
                         role: roleList.filter(data => data.id === value.roleId)[0],
-                    }
+                    };
                 }
                 return item;
-            }))
+            }));
             setIsUpdateDisabled(!isUpdateDisabled);
 
-            axios.patch(`http://localhost:5000/users/${current.id}`, value).then()
-        })
-    }
+            axios.patch(`http://localhost:5000/users/${current.id}`, value).then();
+        });
+    };
     // 用户状态修改
     const handleChange = (item) => {
         item.roleState = !item.roleState;
         setUserSource([...userSource]);
         axios.patch(`http://localhost:5000/users/${item.id}`, {
             roleState: item.roleState
-        }).then()
-    }
+        }).then();
+    };
     //
     // 更新修改操作
     const handleUpdate = async (item) => {
@@ -200,7 +213,7 @@ function UserList() {
         //     }, 0)
         // }, 0);
 
-    }
+    };
     return (
         <div>
             <Button type={"primary"} onClick={() => {
@@ -247,6 +260,7 @@ function UserList() {
                     roleList={roleList}
                     ref={updateForm}
                     isUpdateDisabled={isUpdateDisabled}
+                    isUpdate={true}
                 />
             </Modal>
         </div>

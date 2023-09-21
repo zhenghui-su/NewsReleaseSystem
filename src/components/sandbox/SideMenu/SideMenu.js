@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {
     AppstoreAddOutlined,
     AppstoreOutlined,
@@ -27,9 +27,9 @@ import {
     UsergroupDeleteOutlined,
     UserOutlined,
     UserSwitchOutlined,
-} from '@ant-design/icons';
-import {Layout, Menu} from 'antd';
-import './SideMenu.css'
+} from "@ant-design/icons";
+import {Layout, Menu} from "antd";
+import "./SideMenu.css";
 import {withRouter} from "react-router-dom";
 import axios from "axios";
 
@@ -41,8 +41,10 @@ function SideMenu(props) {
     useEffect(() => {
         axios.get("http://localhost:5000/rights?_embed=children").then(res => {
             setMenu(res.data);
-        })
-    }, [])
+        });
+    }, []);
+    const {role: {rights}} = JSON.parse(localStorage.getItem("token"));
+
     // 图标列表
     const iconList = {
         "/home": <UploadOutlined/>,
@@ -76,8 +78,8 @@ function SideMenu(props) {
     };
     // 判断逻辑是否显示
     const checkPagePermission = (item) => {
-        return item.pagepermisson === 1;
-    }
+        return item.pagepermisson === 1 && rights.includes(item.key);
+    };
     // 递归返回数据中的children部分来达到下拉菜单
     const renderMenu = (menuList) => {
         return menuList.map(item => {
@@ -98,12 +100,12 @@ function SideMenu(props) {
         });
     };
     // 刷新后得到用户之前选中的
-    const selectKeys = [props.location.pathname]
-    const openKeys = ["/" + props.location.pathname.split("/")[1]]
+    const selectKeys = [props.location.pathname];
+    const openKeys = ["/" + props.location.pathname.split("/")[1]];
     return (
         <Sider trigger={null} collapsible collapsed={false}>
             <div className="Menu">
-                <div className='logo'>新闻发布管理系统</div>
+                <div className="logo">新闻发布管理系统</div>
                 <div className="MenuList">
                     <Menu
                         // selectedKeys.key 当前选中的菜单项 key值
@@ -112,8 +114,8 @@ function SideMenu(props) {
                         }}
                         selectedKeys={selectKeys}
                         defaultOpenKeys={openKeys}
-                        theme='dark'
-                        mode='inline'
+                        theme="dark"
+                        mode="inline"
                         items={renderMenu(menu)}
                     />
                 </div>

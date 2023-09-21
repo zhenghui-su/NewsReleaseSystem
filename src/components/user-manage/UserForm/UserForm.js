@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, {forwardRef, useEffect, useState} from "react";
 import {Form, Select} from "antd";
 import Input from "antd/es/input/Input";
 
@@ -9,6 +9,35 @@ const UserForm = forwardRef((props, ref) => {
         useEffect(() => {
             setIsDisable(props.isUpdateDisabled);
         }, [props.isUpdateDisabled]);
+
+        const {roleId, region} = JSON.parse(localStorage.getItem("token"));
+        const roleObj = {
+            "1": "superAdmin",
+            "2": "admin",
+            "3": "editor"
+        };
+        const checkRegionDisabled = (item) => {
+            if (props.isUpdate) {
+                return roleObj[roleId] !== "superAdmin";
+            } else {
+                if (roleObj[roleId] === "superAdmin") {
+                    return false;
+                } else {
+                    return item.value !== region;
+                }
+            }
+        };
+        const checkRoleDisabled = (item) => {
+            if (props.isUpdate) {
+                return roleObj[roleId] !== "superAdmin";
+            } else {
+                if (roleObj[roleId] === "superAdmin") {
+                    return false;
+                } else {
+                    return roleObj[item.id] !== "editor";
+                }
+            }
+        };
 
         return (
             <Form
@@ -21,7 +50,7 @@ const UserForm = forwardRef((props, ref) => {
                     rules={[
                         {
                             required: true,
-                            message: '用户名是必填项！',
+                            message: "用户名是必填项！",
                         },
                     ]}
                 >
@@ -33,7 +62,7 @@ const UserForm = forwardRef((props, ref) => {
                     rules={[
                         {
                             required: true,
-                            message: '密码是必填项！',
+                            message: "密码是必填项！",
                         },
                     ]}
                 >
@@ -45,7 +74,7 @@ const UserForm = forwardRef((props, ref) => {
                     rules={isDisable ? [] : [
                         {
                             required: true,
-                            message: '区域是必填项！',
+                            message: "区域是必填项！",
                         },
                     ]}
                 >
@@ -55,6 +84,7 @@ const UserForm = forwardRef((props, ref) => {
                                 <Option
                                     value={item.value}
                                     key={item.id}
+                                    disabled={checkRegionDisabled(item)}
                                 >
                                     {item.title}
                                 </Option>
@@ -68,7 +98,7 @@ const UserForm = forwardRef((props, ref) => {
                     rules={[
                         {
                             required: true,
-                            message: '角色是必填项！',
+                            message: "角色是必填项！",
                         },
                     ]}
                 >
@@ -77,14 +107,20 @@ const UserForm = forwardRef((props, ref) => {
                             setIsDisable(true);
                             ref.current.setFieldsValue({
                                 region: ""
-                            })
+                            });
                         } else {
                             setIsDisable(false);
                         }
                     }}>
                         {
                             props.roleList.map(item =>
-                                <Option value={item.id} key={item.id}>{item.roleName}</Option>
+                                <Option
+                                    value={item.id}
+                                    key={item.id}
+                                    disabled={checkRoleDisabled(item)}
+                                >
+                                    {item.roleName}
+                                </Option>
                             )
                         }
                     </Select>
@@ -92,5 +128,5 @@ const UserForm = forwardRef((props, ref) => {
             </Form>
         );
     }
-)
+);
 export default UserForm;
