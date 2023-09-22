@@ -63,11 +63,11 @@ function RightList() {
     const [dataSource, setDataSource] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+        axios.get("/rights?_embed=children").then(res => {
             const list = res.data;
             list.forEach(item => {
                 if (item.children.length === 0) {
-                    item.children = ""
+                    item.children = "";
                 }
             });
             setDataSource(list);
@@ -93,11 +93,11 @@ function RightList() {
         setDataSource([...dataSource])
 
         if (item.grade === 1) {
-            axios.patch(`http://localhost:5000/rights/${item.id}`, {
+            axios.patch(`/rights/${item.id}`, {
                 pagepermisson: item.pagepermisson
             }).then()
         } else {
-            axios.patch(`http://localhost:5000/children/${item.id}`, {
+            axios.patch(`/children/${item.id}`, {
                 pagepermisson: item.pagepermisson
             }).then()
         }
@@ -107,12 +107,12 @@ function RightList() {
         // 当前页面同步状态 + 后端同步
         if (item.grade === 1) {
             setDataSource(dataSource.filter(data => data.id !== item.id));
-            axios.delete(`http://localhost:5000/rights/${item.id}`).then();
+            axios.delete(`/rights/${item.id}`).then();
         } else {
             let list = dataSource.filter(data => data.id === item.rightId);
             list[0].children = list[0].children.filter(data => data.id !== item.id);
             setDataSource([...dataSource]);
-            axios.delete(`http://localhost:5000/children/${item.id}`).then();
+            axios.delete(`/children/${item.id}`).then();
         }
     }
     return (

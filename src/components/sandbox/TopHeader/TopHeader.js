@@ -12,6 +12,7 @@ import {Space} from "antd";
 import Avatar from "antd/es/avatar/avatar";
 import {withRouter} from "react-router";
 
+//头部栏
 function TopHeader(props) {
     const [collapsed, setCollapsed] = useState(false);
     const changeCollapsed = () => {
@@ -44,7 +45,7 @@ function TopHeader(props) {
 
     ];
     return (
-        //头部栏
+
         <Header className='site-layout-background' style={{padding: '0 16px'}}>
             {
                 collapsed ? <MenuUnfoldOutlined onClick={changeCollapsed}/> :

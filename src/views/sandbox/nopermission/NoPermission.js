@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
-function NoPermission(props) {
+// 无权限时显示
+function NoPermission() {
     return (
         <div>
-            no
+            403 NoPermission
         </div>
     );
 }

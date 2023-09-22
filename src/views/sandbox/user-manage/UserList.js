@@ -28,7 +28,7 @@ function UserList() {
             "2": "admin",
             "3": "editor"
         };
-        axios.get("http://localhost:5000/users?_expand=role").then(res => {
+        axios.get("/users?_expand=role").then(res => {
             const list = res.data;
             setUserSource(roleObj[roleId] === "superAdmin" ? list : [
                 ...list.filter(item => item.username === username),
@@ -38,13 +38,13 @@ function UserList() {
         });
     }, [region, roleId, username]);
     useEffect(() => {
-        axios.get("http://localhost:5000/regions").then(res => {
+        axios.get("/regions").then(res => {
 
             setRegionList(res.data);
         });
     }, []);
     useEffect(() => {
-        axios.get("http://localhost:5000/roles").then(res => {
+        axios.get("/roles").then(res => {
             setRoleList(res.data);
         });
     }, []);
@@ -133,7 +133,7 @@ function UserList() {
     const deleteMethod = (item) => {
         // 当前页面同步状态 + 后端同步
         setUserSource(userSource.filter(data => data.id !== item.id));
-        axios.delete(`http://localhost:5000/users/${item.id}`).then();
+        axios.delete(`/users/${item.id}`).then();
     };
     // 添加提交表单方法
     const addFormOk = () => {
@@ -141,7 +141,7 @@ function UserList() {
             setIsAddVisible(false);
             addForm.current.resetFields();
             // 从post到后端 生成id 在设置userSource 方便后面的删除和更新
-            axios.post(`http://localhost:5000/users`, {
+            axios.post(`/users`, {
                 ...value,
                 "roleState": true,
                 "default": false,
@@ -172,14 +172,14 @@ function UserList() {
             }));
             setIsUpdateDisabled(!isUpdateDisabled);
 
-            axios.patch(`http://localhost:5000/users/${current.id}`, value).then();
+            axios.patch(`/users/${current.id}`, value).then();
         });
     };
     // 用户状态修改
     const handleChange = (item) => {
         item.roleState = !item.roleState;
         setUserSource([...userSource]);
-        axios.patch(`http://localhost:5000/users/${item.id}`, {
+        axios.patch(`/users/${item.id}`, {
             roleState: item.roleState
         }).then();
     };

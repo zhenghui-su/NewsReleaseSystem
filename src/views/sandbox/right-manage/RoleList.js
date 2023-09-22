@@ -57,12 +57,12 @@ function RoleList() {
     ];
     // 请求数据
     useEffect(() => {
-        axios.get("http://localhost:5000/roles").then(res => {
+        axios.get("/roles").then(res => {
             setRoleSource(res.data);
         });
     }, []);
     useEffect(() => {
-        axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+        axios.get("/rights?_embed=children").then(res => {
             setRightList(res.data);
         });
     }, []);
@@ -81,7 +81,7 @@ function RoleList() {
     // 删除方法
     const deleteMethod = (item) => {
         setRoleSource(roleSource.filter(data => data.id !== item.id));
-        axios.delete(`http://localhost:5000/roles/${item.id}`).then();
+        axios.delete(`/roles/${item.id}`).then();
     };
     const handleOk = () => {
         setIsModalOpen(false);
@@ -96,7 +96,7 @@ function RoleList() {
             return item;
         }))
         // patch
-        axios.patch(`http://localhost:5000/roles/${currentId}`, {
+        axios.patch(`/roles/${currentId}`, {
             rights: currentRights
         }).then()
     };

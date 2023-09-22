@@ -35,11 +35,12 @@ import axios from "axios";
 
 const {Sider} = Layout;
 
+// 侧边栏
 function SideMenu(props) {
     // 通过后端返回侧边栏的数据来创建Menu
     const [menu, setMenu] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+        axios.get("/rights?_embed=children").then(res => {
             setMenu(res.data);
         });
     }, []);
