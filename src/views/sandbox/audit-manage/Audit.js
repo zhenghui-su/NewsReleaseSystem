@@ -12,6 +12,7 @@ function Audit() {
             "2": "admin",
             "3": "editor"
         };
+        // 审核状态为1请求
         axios.get(`/news?auditState=1&_expand=category`).then(res => {
             const list = res.data;
             setDataSource(roleObj[roleId] === "superAdmin" ? list : [
