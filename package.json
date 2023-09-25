@@ -6,8 +6,12 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.9.0",
+    "antd": "4.24.12",
     "axios": "^1.5.0",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0",
+    "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,6 +20,7 @@
     "react-scripts": "5.0.1",
     "react-tsparticles": "^2.12.2",
     "sass": "^1.66.1",
+    "tsparticles": "^2.12.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,6 +49,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.2.6",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-router-dom": "^5.3.4",
     "tsparticles-slim": "^2.12.0"
   }
