@@ -44,6 +44,7 @@ function NewsDraft(props) {
                         onClick={() => confirmMethod(item)}
                     />
                     <Button
+                        style={{margin: "0 10px"}}
                         shape="circle"
                         icon={<EditOutlined/>}
                         onClick={() => {

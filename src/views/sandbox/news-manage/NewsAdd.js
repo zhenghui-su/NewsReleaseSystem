@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {Button, Form, message, notification, PageHeader, Select, Steps} from "antd";
 import style from "./News.module.css";
 import Input from "antd/es/input/Input";
-import {Option} from "antd/es/mentions";
 import axios from "axios";
 import NewsEditor from "../../../components/news-manage/NewsEditor";
 
@@ -136,12 +135,12 @@ function NewsAdd(props) {
                             <Select>
                                 {
                                     categoryList.map(item =>
-                                        <Option
+                                        <Select.Option
                                             value={item.id}
                                             key={item.id}
                                         >
                                             {item.title}
-                                        </Option>
+                                        </Select.Option>
                                     )
                                 }
 
