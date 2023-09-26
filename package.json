@@ -10,6 +10,7 @@
     "axios": "^1.5.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "echarts": "5.0.2",
     "html-to-draftjs": "^1.5.0",
     "moment": "^2.29.4",
     "nprogress": "^0.2.0",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.2.6",
+    "lodash": "^4.17.21",
     "react-draft-wysiwyg": "^1.15.0",
     "react-router-dom": "^5.3.4",
     "tsparticles-slim": "^2.12.0"
