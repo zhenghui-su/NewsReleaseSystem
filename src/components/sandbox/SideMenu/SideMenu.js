@@ -32,11 +32,14 @@ import {Layout, Menu} from "antd";
 import "./SideMenu.css";
 import {withRouter} from "react-router-dom";
 import axios from "axios";
-
+import {useSelector} from "react-redux";
 const {Sider} = Layout;
 
 // 侧边栏
 function SideMenu(props) {
+    // 通过useSeletor
+    const isCollapsed = useSelector(state => state.CollapsedReducer.isCollapsed);
+
     // 通过后端返回侧边栏的数据来创建Menu
     const [menu, setMenu] = useState([]);
     useEffect(() => {
@@ -103,8 +106,8 @@ function SideMenu(props) {
     // 刷新后得到用户之前选中的
     const selectKeys = [props.location.pathname];
     const openKeys = ["/" + props.location.pathname.split("/")[1]];
-    return (
-        <Sider trigger={null} collapsible collapsed={false}>
+    return (                                         //props.isCollapsed
+        <Sider trigger={null} collapsible collapsed={isCollapsed}>
             <div className="Menu">
                 <div className="logo">新闻发布管理系统</div>
                 <div className="MenuList">
@@ -124,5 +127,12 @@ function SideMenu(props) {
         </Sider>
     );
 }
+
+// connect 方法 改为 useSelector获取
+/* const mapStateToProps = ({CollapsedReducer: {isCollapsed}}) => ({
+     isCollapsed
+ });
+export default connect(mapStateToProps)(withRouter(SideMenu));
+*/
 
 export default withRouter(SideMenu);
