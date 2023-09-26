@@ -1,6 +1,7 @@
 ### 本项目适合新学习React的初学者练手
 
 技术栈如下:
+
 The technology stack is as follows:
 
 + React 18 React 18 版本
@@ -19,6 +20,7 @@ The technology stack is as follows:
 3. 本系统一些组件运用富文本编辑器库，登录界面运用粒子效果库
 4. 本系统运用了axios请求拦截器来显示加载动画(因网络数据请求过慢)
 
+
 1. This system makes extensive use of antd components, including router, redux management, and optimizes some deprecated
    antd
 2. This system changes the original code to use connect, instead of using hook functions
@@ -33,18 +35,21 @@ This is a general purpose background news system, front-end oriented, back-end e
 
 ### 如何学习？
 
-先create-react-app创建后，可依据哔哩哔哩千峰视频的顺序练习 After creating create-react-app, you can practice according to the sequence of
-Bilibili Qianfeng video
+先create-react-app创建后，可依据哔哩哔哩千峰视频的顺序练习
+
+After creating create-react-app, you can practice according to the sequence of Bilibili Qianfeng video
 
 ### 如何启动项目？
 
-git clone后在终端输入yarn安装依赖，然后输入`yarn run start`即可启动 After git clone, enter yarn to install the dependency on the terminal,
-and enter `yarn run start` to start the operation
+git clone后在终端输入yarn安装依赖，然后输入`yarn run start`即可启动
+
+After git clone, enter yarn to install the dependency on the terminal, and enter `yarn run start` to start the operation
 
 ### 如何启动json-server How to start json-server?
 
-你只需在db.json文件所在目录，打开命令行窗口，输入如下代码 Just open a command line window in the directory where the db.json file resides and
-enter the following code
+你只需在db.json文件所在目录，打开命令行窗口，输入如下代码
+
+Just open a command line window in the directory where the db.json file resides and enter the following code
 
 ```bash
 json-server --watch ./db.json --port 5000
